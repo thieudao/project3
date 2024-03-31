@@ -55,6 +55,12 @@ st.markdown(
 
 # Tiêu đề chính của ứng dụng
 st.title("Đồ án khoa học dữ liệu")
+st.write("## Project 3 - Customer Segmentation with RFM")
+html = '<img src="https://i0.wp.com/crmviet.vn/wp-content/uploads/2019/10/customer-segmentation.jpg?ssl=1" alt="icon" style="vertical-align: middle; margin-right: 10px; max-width: 100%;">'
+st.markdown(f"## {html}", unsafe_allow_html=True)
+
+
+
 
 # Danh sách các mục menu
 menu = [
@@ -69,11 +75,42 @@ choice = st.sidebar.selectbox("Danh mục", menu)
 
 # Hiển thị nội dung tương ứng với lựa chọn của người dùng
 if choice == "Giới thiệu đồ án":
-    st.write(
-        """ Đồ án này gồm 3 phần: (1) Phân tích tình cảm; (2) Đề xuất sản phẩm và (3) Phân khúc khách hàng 
-        **(Minh họa thêm)**
-        """
-    )
+    st.write("""
+    \n **Tình hình**:
+
+    * Công ty X chủ yếu bán các sản phẩm là quà tặng dành cho những dịp đặc biệt. Nhiều khách hàng của công ty là khách hàng bán buôn.
+    * Công ty X mong muốn có thể bán được nhiều sản phẩm hơn cũng như giới thiệu sản phẩm đến đúng đối tượng khách hàng, chăm sóc và làm hài lòng khách hàng.
+    * Tìm ra giải pháp giúp cải thiện hiệu quả quảng bá, từ đó giúp tăng doanh thu bán hàng, cải thiện mức độ hài lòng của khách hàng.
+
+    \U0001F3AF **Mục tiêu/ vấn đề**: Xây dựng hệ thống phân cụm khách hàng dựa trên các thông tin do công ty cung cấp từ đó có thể giúp công ty xác định các nhóm khách hàng khác nhau để có chiến lược kinh doanh, chăm sóc khách hàng phù hợp.""")
+
+    st.write("""
+    Từ mục tiêu/ vấn đề đã xác định: Xem xét các dữ liệu cần thiết:
+    
+    * Toàn bộ dữ liệu được lưu trữ trong tập tin OnlineRetail.csv với 541.909 record chứa tất cả các giao dịch xảy ra từ ngày 01/12/2010 đến 09/12/2011 đối với bán lẻ trực tuyến.
+    * Mô tả dữ liệu: https://archive.ics.uci.edu/ml/datasets/online+retail""")
+
+    # Display RFM model and its components
+    st.subheader("RFM là gì?")
+    st.write("""
+    **Mô hình RFM (Recency, Frequency, Monetary)** là một mô hình phân tích khách hàng trong lĩnh vực tiếp thị và quản lý quan hệ khách hàng. 
+
+    Mô hình RFM đánh giá các khía cạnh quan trọng của hành vi mua hàng của khách hàng dựa trên 3 yếu tố:
+
+    - **Recency (Thời gian gần nhất mua hàng)**: Đo lường thời gian kể từ lần mua hàng gần nhất của khách hàng. Khách hàng càng mới mua hàng, càng có thể đưa ra quyết định mua hàng tiếp theo.
+        
+    - **Frequency (Tần suất)**: Đo lường số lần mua hàng trong một khoảng thời gian nhất định. Khách hàng có tần suất mua hàng cao thường có mức độ hài lòng và độ trung thành cao.
+        
+    - **Monetary (Giá trị tiền mỗi lần mua hàng)**: Đo lường giá trị trung bình của mỗi giao dịch của khách hàng. Khách hàng có giá trị tiền mỗi lần mua hàng cao thường mang lại doanh thu lớn cho doanh nghiệp.
+
+    Mô hình RFM được sử dụng để phân đoạn khách hàng và xác định các nhóm khách hàng có giá trị khác nhau, từ đó giúp các doanh nghiệp tối ưu hóa chiến lược tiếp thị và quản lý quan hệ khách hàng.
+    """)
+
+    st.subheader("Nhóm Thực hiện:")
+    st.write("\U0001F467 - Hạ Thị Thiều Dao")
+    st.write("\U0001F466 - Huỳnh Thiện Phúc")
+    st.write("\U0001F467 - Văn Thị Tường Vi")
+
 
 elif choice == "Đồ án phân tích tình cảm":
     st.write("<span style='color:green; font-size:24px;'>Bạn Vi sẽ trình bày</span>", unsafe_allow_html=True)
@@ -92,7 +129,7 @@ elif choice == "Đồ án Phân khúc thị trường":
             return data
         except FileNotFoundError:
             st.error(f"Không tìm thấy tệp {file_path}")
-
+    
     # Hàm phân khúc khách hàng
     def segment_customer(rfm_score):
         if rfm_score >= 13:
@@ -117,6 +154,13 @@ elif choice == "Đồ án Phân khúc thị trường":
 
     # Hiển thị DataFrame
     st.write(data)
+    st.image("Top10ProductByQuantity.png", caption="Top 10 best-selling products", width=None)
+    st.image("SalesbyCountry.png", caption="Sales by Country", width=None)
+    st.write("\U0001F5EB * Sale tập trung phần lớn ở United Kindom (Anh Quốc)")
+    st.image("monthlySaleTrendByQuantity.png", caption="Monthly Sale Trend by Quantity",width=None)
+    st.write("\U0001F5EB * Sales tăng mạnh từ tháng 11/2010")
+
+    st.image("RFMScore.png", caption="RFM Score Distribution",width=None)
 
     # Lựa chọn nhập thông tin từ người dùng
     input_option = st.radio(
@@ -142,13 +186,16 @@ elif choice == "Đồ án Phân khúc thị trường":
             except ValueError:
                 st.write("Vui lòng nhập một số nguyên cho mã khách hàng.")
         
-    # Phân 5 nhóm khách hàng (dựa vào tính thường xuyên và giá trị của giao dịch)
-    # 1. Khách hàng VIP	13-15	Mua gần đây, thường xuyên, giá trị cao
-    # 2. Khách hàng thân thiết	11-13	Mua gần đây, thường xuyên, giá trị trung bình
-    # 3. Khách hàng tiềm năng	9-11	Mua cách đây vừa phải, thường xuyên, giá trị trung bình
-    # 4. Khách hàng cần quan tâm 7-9	Mua cách đây lâu, không thường xuyên, giá trị trung bình
-    # 5. Khách hàng bàng quan	5-7	Mua cách đây lâu, không thường xuyên
-            # Hiển thị tất cả các cột khi in ra DataFrame
+
+        st.info("_Customer ID có giá trị từ 12346  đến 18287_")
+        # Phân 5 nhóm khách hàng (dựa vào tính thường xuyên và giá trị của giao dịch)
+        # 1. Khách hàng VIP	13-15	Mua gần đây, thường xuyên, giá trị cao
+        # 2. Khách hàng thân thiết	11-13	Mua gần đây, thường xuyên, giá trị trung bình
+        # 3. Khách hàng tiềm năng	9-11	Mua cách đây vừa phải, thường xuyên, giá trị trung bình
+        # 4. Khách hàng cần quan tâm 7-9	Mua cách đây lâu, không thường xuyên, giá trị trung bình
+        # 5. Khách hàng bàng quan	5-7	Mua cách đây lâu, không thường xuyên
+        # Hiển thị tất cả các cột khi in ra DataFrame
+        
         pd.set_option('display.max_columns', None)
         # Mô tả RFMscore
         print(data['RFMscore'].describe().round(0))
@@ -169,10 +216,16 @@ elif choice == "Đồ án Phân khúc thị trường":
         # Nhập giá trị Monetary
         monetary = st.number_input("Nhập giá trị Monetary (Monetary): ", min_value=monetary_min, max_value=monetary_max, value=(monetary_min + monetary_max) / 2, format="%.2f")
 
-        # Xử lý các giá trị RFM để xác định nhóm khách hàng sử dụng mô hình
-        # (Thay thế phần này bằng logic phân khúc RFM thực tế của bạn sử dụng mô hình)
-        input_data = [[recency, frequency, monetary]]
-        # customer_segment = model.predict(input_data)[0]
+        st.info("_**Recency** (Thời gian gần nhất mua hàng):  lấy ngày (ngày hiện tại) - ngày mua hàng_")
 
-        # st.write(f"Khách hàng thuộc nhóm: {customer_segment}")
+        st.info("_**Frequency** (Tần suất): chúng ta cần đếm số lượng giao dịch duy nhất của khách hàng trong khoảng thời gian quan tâm._")
+
+        st.info("_**Monetary** (Giá trị tiền mỗi lần mua hàng): Để tính Monetary, chúng ta cần tính tổng giá trị của các giao dịch mà mỗi khách hàng đã thực hiện._")
+        # Xử lý các giá trị RFM để xác định nhóm khách hàng sử dụng mô hình
+        
+        # (Thay thế phần này bằng logic phân khúc RFM thực tế của bạn sử dụng mô hình)
+        #input_data = [[recency, frequency, monetary]]
+        #customer_segment = model.predict(input_data)[0]
+
+        #st.write(f"Khách hàng thuộc nhóm: {customer_segment}")
 #Done`
